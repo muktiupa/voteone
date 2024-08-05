@@ -1,36 +1,88 @@
+import { useState, useEffect } from 'react';
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
-import { Inter } from "next/font/google";
+import Preloader from "@/components/Preloader";
+import Register from "@/components/Register";
 import Vote from "@/components/Vote";
-import {useState,useEffect} from "react";
-const inter = Inter({ subsets: ["latin"] });
-import { Register } from "@/components/Register";
-import axios from "axios";
+import VotingSuccess from "@/components/VotingSuccess";
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default function Home() {
+  const isRegistration = process.env.NEXT_PUBLIC_USER_REGISTRATIION === 'true';
+  const [contestants, setContestants] = useState(null);
+  const [alreadyVoted, setAlreadyVoted] = useState(false);
+  const [votingStatus, setVotingStatus] = useState(true);
+  const [currentStep, setCurrentStep] = useState('preloader');
 
-  const isRegistration = process.env.NEXT_PUBLIC_USER_REGISTRATIION;
-  const [contestants,setContestants] = useState(null);
-  
   const getContestant = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/contestants`);
-      setContestants(response.data); // Assuming response.data contains the array of contestants
+      setContestants(response.data);
     } catch (error) {
       console.error('Error fetching contestants:', error);
     }
   };
-useEffect(()=>{
-  getContestant();
 
-},[]);
+  const handleBack = () => {
+    if (currentStep === 'register') {
+      setCurrentStep('preloader');
+    } else if (currentStep === 'vote') {
+      setCurrentStep(isRegistration ? 'register' : 'preloader');
+    }
+  };
+
+  const handleNext = () => {
+    if (votingStatus) {
+      setCurrentStep(isRegistration ? 'register' : 'vote');
+    }
+  };
+
+  useEffect(() => {
+    getContestant();
+  }, []);
+
+  useEffect(() => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/votingstatus`)
+      .then(response => {
+        let datax = response?.data?.[0] ?? null;
+        if (datax) {
+          setVotingStatus(datax.status);
+          if (datax.status && Cookies.get('alreadyvoted')) {
+            setAlreadyVoted(true);
+            setCurrentStep('votingsuccess');
+          } else {
+            setCurrentStep(votingStatus ? 'vote' : 'preloader');
+          }
+        } else {
+          Cookies.remove('alreadyvoted');
+          setCurrentStep('preloader');
+        }
+      })
+      .catch(error => console.error('Error fetching voting status:', error));
+  }, []);
 
   return (
     <>
-    <Header/>
-  {isRegistration && <Register/>}
-   <Vote contestants = {contestants}/>
-   <Footer/>
-   </>
+      <Header />
+      <div className="flex flex-col items-center justify-center bg-gray-100 min-h-[85vh]">
+        <div className="w-full max-w-sm p-2 bg-white rounded-lg shadow-lg">
+          <div className="p-2 mt-1 bg-white rounded-lg shadow-lg">
+            {currentStep === 'preloader' && <Preloader votingStatus={votingStatus} goNext={handleNext} />}
+            {currentStep === 'register' && <Register goBack={handleBack} />}
+            {currentStep === 'vote' && (
+              <Vote
+                contestants={contestants}
+                alreadyVoted={alreadyVoted}
+                setAlreadyVoted={setAlreadyVoted}
+                goBack={handleBack}
+              />
+            )}
+            {currentStep === 'votingsuccess' && <VotingSuccess />}
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
   );
 }

@@ -10,6 +10,8 @@ const Vote = ({ contestants }) => {
   const [votingData, setVotingData] = useState([]);
   const [alreadyVoted, setAlreadyVoted] = useState(false);
   const [votingStatus, setVotingStatus] = useState(true);
+  const [currentContestant,setCurrentContestant] = useState(null);
+  const [isLastContestant,setIsLastContestant] = useState(null);
 
   useEffect(() => {
     // Check voting status and manage 'alreadyVoted' cookie
@@ -35,7 +37,7 @@ const Vote = ({ contestants }) => {
 
   const handleNext = () => {
     if (selectedRating === null) return;
-
+    if(!contestants) return;
     const currentContestant = contestants[currentContestantIndex];
     setVotingData(prevData => [
       ...prevData,
@@ -43,7 +45,9 @@ const Vote = ({ contestants }) => {
     ]);
     setSelectedRating(null);
     setCurrentContestantIndex(currentContestantIndex + 1);
+    setCurrentContestant(contestants[currentContestantIndex + 1]);
   };
+
 
   const handleSubmitVote = () => {
     if (alreadyVoted) {
@@ -70,10 +74,15 @@ const Vote = ({ contestants }) => {
   if (!votingStatus) {
     return <div>Voting is not open at this time.</div>;
   }
+useEffect(()=>{
+if(contestants){
+  setCurrentContestant(contestants[currentContestantIndex]);
+  setIsLastContestant(contestants.length - 1);
+}
 
-  const currentContestant = contestants[currentContestantIndex];
-  const isLastContestant = currentContestantIndex === contestants.length - 1;
+},[contestants]);
 
+console.log(isLastContestant,currentContestantIndex);
   return (
     <div className="flex flex-col items-center justify-center bg-gray-100 min-h-screen">
       <div className="w-full max-w-sm p-2 bg-white rounded-lg shadow-lg">
@@ -81,15 +90,17 @@ const Vote = ({ contestants }) => {
           <h2 className="text-gray-800 text-center font-bold text-[1.8rem] mb-3">
             GAIL’s Got Talent 2024
           </h2>
+          {currentContestant &&
           <div className="flex flex-row items-center justify-evenly w-full">
             <Avatar className="w-24 h-24 mb-4 border border-gray-300 rounded-full">
-              <AvatarImage src={currentContestant.image} alt={currentContestant.name} />
-              <AvatarFallback>{currentContestant.name[0]}</AvatarFallback>
+              {currentContestant?.image && <AvatarImage src={currentContestant?.image} alt={currentContestant.name} />}
+              <AvatarFallback>{currentContestant?.name ?? ''}</AvatarFallback>
             </Avatar>
             <div className="text-lg font-semibold">{currentContestant.name}</div>
           </div>
+          }
           <div className="mt-6 text-center">
-            <p>{currentContestant.artForm}</p>
+            <p>{currentContestant?.artForm ?? ''}</p>
             <p>Please cast your vote on a scale of 1 to 10, with 1 being the worst and 10 being the best.</p>
             <div className="grid grid-cols-5 gap-2 mt-4">
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
@@ -105,7 +116,7 @@ const Vote = ({ contestants }) => {
             </div>
           </div>
           <div className="flex justify-between mt-6">
-            {isLastContestant ? (
+            {isLastContestant === currentContestantIndex ? (
               <Button
                 variant="default"
                 className="w-full"

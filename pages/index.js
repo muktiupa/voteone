@@ -103,7 +103,7 @@ if(alreadyVoted){
 
   return (
     <div className="border border-gray-300 rounded-md p-2">
-      {currentStep === "preloader" ? <NeoHeader /> : <Header/>}
+      {currentStep === "preloader" ? <Header /> : <NeoHeader/>}
       <div className="flex flex-col items-center justify-center bg-gray-100 min-h-full">
         <div className="w-full h-[80vh] max-w-sm bg-white">
           <div className="p-2 mt-1 bg-white h-full">

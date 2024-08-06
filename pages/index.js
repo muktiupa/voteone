@@ -42,6 +42,7 @@ export default function Home() {
 
   const handleNext = async() => {
     let statuscheck = await votingStatuscheck();
+ 
     if (statuscheck) {
       setCurrentStep(isRegistration ? 'register' : 'vote');
     }else{
@@ -54,17 +55,18 @@ export default function Home() {
     getContestant();
   }, []);
 
-  const votingStatuscheck=async()=>{
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/votingstatus`,{
-      headers:{
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiToken}`
-              }
-    })
-      .then(response => {
-        let datax = response?.data?.[0] ?? null;
-        if (datax) {
-          if(datax.status){
+  const votingStatuscheck = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/votingstatus`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiToken}`
+        }
+      });
+  
+      let datax = response?.data?.[0] ?? null;
+      if (datax) {
+        if (datax.status) {
           if (datax.status && Cookies.get('alreadyvoted')) {
             setAlreadyVoted(true);
             setCurrentStep('votingsuccess');
@@ -73,16 +75,19 @@ export default function Home() {
           }
           setVotingStatus(datax.status);
           return datax.status;
-        }else {
+        } else {
           Cookies.remove('alreadyvoted');
           setCurrentStep('preloader');
           return false;
         }
-        } 
-      })
-      .catch(error => console.error('Error fetching voting status:', error));
-
-  }
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error('Error fetching voting status:', error);
+      return false;
+    }
+  };
 
  useEffect(()  =>{
 votingStatuscheck();

@@ -45,6 +45,7 @@ export default function Home() {
  
     if (statuscheck) {
       setCurrentStep(isRegistration ? 'register' : 'vote');
+      return;
     }else{
       alert("Voting lines are close Now.");
       setCurrentStep('preloader');

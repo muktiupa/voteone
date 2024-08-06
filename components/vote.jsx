@@ -75,23 +75,25 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
 
   return (
     <>
-    <div className='w-[95%] shadow-md h-[65vh] bg-white'> aa
-      <h2 className="text-gray-800 text-center font-bold text-[1.8rem] mb-3">
+    <div className='w-[95%] shadow-md bg-white'>
+      <h2 className="text-gray-800 text-center font-bold text-[1.5rem] mb-3">
         GAIL’s Got Talent 2024
       </h2>
       {currentContestant &&
         <div className="flex flex-row items-center justify-evenly w-full">
-          <Avatar className="w-24 h-24 mb-4 border border-gray-300 rounded-full">
+          <Avatar className="w-20 h-20 mb-2 border border-gray-300 rounded-full p-2">
             {currentContestant?.image && <AvatarImage src={currentContestant?.image} alt={currentContestant.name} />}
-            <AvatarFallback>{currentContestant?.name ?? ''}</AvatarFallback>
+            <AvatarFallback className="p-1">{currentContestant?.name ?? ''}</AvatarFallback>
           </Avatar>
-          <div className="text-lg font-semibold">{currentContestant.name}</div>
+          <div className="text-lg font-semibold">
+            <div>{currentContestant.name}</div>
+            <div className='text-sm text-gray-300'>{currentContestant?.artForm ?? ''}</div>
+            </div>
         </div>
       }
-      <div className="mt-6 text-center">
-        <p>{currentContestant?.artForm ?? ''}</p>
-        <p>Please cast your vote on a scale of 1 to 10, with 1 being the worst and 10 being the best.</p>
-        <div className="grid grid-cols-3 gap-2 mt-4">
+      <div className="mt-1 text-center">
+        <p className='text-sm'>Please cast your vote on a scale of 1 to 10, with 1 being the worst and 10 being the best.</p>
+        <div className="grid grid-cols-3 gap-2 mt-2">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
             <Button
               key={number}
@@ -104,7 +106,7 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
           ))}
         </div>
       </div>
-      <div className="flex justify-between mt-6">
+      <div className="flex justify-between mt-3 gap-4">
         <Button
           variant="default"
           className="w-full"

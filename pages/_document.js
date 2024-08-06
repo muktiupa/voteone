@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
-        <div className="max-w-[767px] mx-auto">
+        <div className="max-w-[600px] mx-auto">
           <Main />
         </div>
         <NextScript />

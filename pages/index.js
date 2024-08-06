@@ -8,6 +8,7 @@ import VotingSuccess from "@/components/VotingSuccess";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import NeoHeader from '@/components/ui/NeoHeader';
+import Header from '@/components/ui/Header';
 
 export default function Home() {
   const isRegistration = process.env.NEXT_PUBLIC_USER_REGISTRATIION === 'true';
@@ -101,10 +102,10 @@ if(alreadyVoted){
   },[alreadyVoted]);
 
   return (
-    <>
-      <NeoHeader />
+    <div className="border border-gray-300 rounded-md p-2">
+      {currentStep === "preloader" ? <NeoHeader /> : <Header/>}
       <div className="flex flex-col items-center justify-center bg-gray-100 min-h-full">
-        <div className="w-full h-[85vh] max-w-sm p-2 bg-white ">
+        <div className="w-full h-[80vh] max-w-sm bg-white">
           <div className="p-2 mt-1 bg-white h-full">
             {currentStep === 'preloader' && <Preloader votingStatus={votingStatus} goNext={handleNext} />}
             {currentStep === 'register' && <Register goBack={handleBack} apiToken={apiToken} />}
@@ -122,6 +123,6 @@ if(alreadyVoted){
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }

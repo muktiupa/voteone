@@ -2,9 +2,9 @@ const Preloader = ({ goNext }) => {
   return (
     <>
       
-      <div className="flex flex-col items-center justify-evenly w-full h-full">
+      <div className="flex flex-col items-center justify-evenly w-full">
         <div className="text-center">
-        <img src="/ggt_preloder_img.svg" alt="Logo" className="" />
+        <img src="/ggt_preloder_img.svg" alt="Logo" />
         <h3 className="text-gray-800 text-center font-bold text-[1.2rem] mb-2 pt-9">
         GAIL’s Got Talent 2024
       </h3>

@@ -75,6 +75,7 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
 
   return (
     <>
+    <div className='w-[95%] shadow-md h-[65vh] bg-white'> aa
       <h2 className="text-gray-800 text-center font-bold text-[1.8rem] mb-3">
         GAIL’s Got Talent 2024
       </h2>
@@ -130,6 +131,7 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
             Next
           </Button>
         )}
+      </div>
       </div>
     </>
   );

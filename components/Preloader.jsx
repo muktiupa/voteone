@@ -1,16 +1,18 @@
 const Preloader = ({ goNext }) => {
   return (
     <>
-      <h2 className="text-gray-800 text-center font-bold text-[1.8rem] mb-3">
-        GAIL’s Got Talent 2024
-      </h2>
-      <div className="flex flex-col items-center justify-evenly w-full h-[70vh]">
+      
+      <div className="flex flex-col items-center justify-evenly w-full h-full">
         <div className="text-center">
-          <h3>PreLoader  GAIL’s Got Talent 2024</h3>
+        <img src="/ggt_preloder_img.svg" alt="Logo" className="" />
+        <h3 className="text-gray-800 text-center font-bold text-[1.2rem] mb-2 pt-9">
+        GAIL’s Got Talent 2024
+      </h3>
+          <p>Click the <strong>'Next'</strong> button to start voting for your favorite candidate.</p>
         </div>
        
           <button
-            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full max-w-xs"
             onClick={goNext}
           >
             Next

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Header from "@/components/ui/Header";
+// import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import Preloader from "@/components/Preloader";
 import Register from "@/components/Register";
@@ -7,6 +7,7 @@ import Vote from "@/components/Vote";
 import VotingSuccess from "@/components/VotingSuccess";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import NeoHeader from '@/components/ui/NeoHeader';
 
 export default function Home() {
   const isRegistration = process.env.NEXT_PUBLIC_USER_REGISTRATIION === 'true';
@@ -101,10 +102,10 @@ if(alreadyVoted){
 
   return (
     <>
-      <Header />
-      <div className="flex flex-col items-center justify-center bg-gray-100 min-h-[85vh]">
-        <div className="w-full max-w-sm p-2 bg-white rounded-lg shadow-lg">
-          <div className="p-2 mt-1 bg-white rounded-lg shadow-lg">
+      <NeoHeader />
+      <div className="flex flex-col items-center justify-center bg-gray-100 min-h-full">
+        <div className="w-full h-[85vh] max-w-sm p-2 bg-white ">
+          <div className="p-2 mt-1 bg-white h-full">
             {currentStep === 'preloader' && <Preloader votingStatus={votingStatus} goNext={handleNext} />}
             {currentStep === 'register' && <Register goBack={handleBack} apiToken={apiToken} />}
             {currentStep === 'vote' && (

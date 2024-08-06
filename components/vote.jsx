@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack }) => {
+const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken }) => {
   const [currentContestantIndex, setCurrentContestantIndex] = useState(0);
   const [selectedRating, setSelectedRating] = useState(null);
   const [votingData, setVotingData] = useState([]);
   const [currentContestant, setCurrentContestant] = useState(null);
   const [isLastContestant, setIsLastContestant] = useState(null);
+
 
   const handleRatingClick = (rating) => {
     setSelectedRating(rating);
@@ -44,9 +45,10 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack }) => {
       return;
     }
 
-    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/castvote`, votingData, {
+    axios.post(`${apiToken}/castvote`, votingData, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_APITOKEN}`
       }
     })
       .then(response => {

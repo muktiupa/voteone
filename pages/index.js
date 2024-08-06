@@ -14,10 +14,17 @@ export default function Home() {
   const [alreadyVoted, setAlreadyVoted] = useState(false);
   const [votingStatus, setVotingStatus] = useState(true);
   const [currentStep, setCurrentStep] = useState('preloader');
+  const apiToken = process.env.NEXT_PUBLIC_APITOKEN;
 
   const getContestant = async () => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/contestants`);
+      const response = axios.get(`${process.env.NEXT_PUBLIC_API_URL}/contestants`,{
+        headers:{
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${apiToken}`
+                }
+      });
+      
       setContestants(response.data);
     } catch (error) {
       console.error('Error fetching contestants:', error);
@@ -43,7 +50,12 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/votingstatus`)
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/votingstatus`,{
+      headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiToken}`
+              }
+    })
       .then(response => {
         let datax = response?.data?.[0] ?? null;
         if (datax) {
@@ -69,13 +81,14 @@ export default function Home() {
         <div className="w-full max-w-sm p-2 bg-white rounded-lg shadow-lg">
           <div className="p-2 mt-1 bg-white rounded-lg shadow-lg">
             {currentStep === 'preloader' && <Preloader votingStatus={votingStatus} goNext={handleNext} />}
-            {currentStep === 'register' && <Register goBack={handleBack} />}
+            {currentStep === 'register' && <Register goBack={handleBack} apiToken={apiToken} />}
             {currentStep === 'vote' && (
               <Vote
                 contestants={contestants}
                 alreadyVoted={alreadyVoted}
                 setAlreadyVoted={setAlreadyVoted}
                 goBack={handleBack}
+                apiToken={apiToken}
               />
             )}
             {currentStep === 'votingsuccess' && <VotingSuccess />}

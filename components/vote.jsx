@@ -45,14 +45,14 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
       return;
     }
 
-    axios.post(`${apiToken}/castvote`, votingData, {
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/castvote`, votingData, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.NEXT_PUBLIC_APITOKEN}`
       }
     })
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           Cookies.set('alreadyvoted', 'true');
           setAlreadyVoted(true);
           alert('Your vote has been successfully submitted.');

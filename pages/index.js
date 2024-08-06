@@ -12,19 +12,19 @@ export default function Home() {
   const isRegistration = process.env.NEXT_PUBLIC_USER_REGISTRATIION === 'true';
   const [contestants, setContestants] = useState(null);
   const [alreadyVoted, setAlreadyVoted] = useState(false);
-  const [votingStatus, setVotingStatus] = useState(true);
+  const [votingStatus, setVotingStatus] = useState(false);
   const [currentStep, setCurrentStep] = useState('preloader');
   const apiToken = process.env.NEXT_PUBLIC_APITOKEN;
 
   const getContestant = async () => {
     try {
-      const response = axios.get(`${process.env.NEXT_PUBLIC_API_URL}/contestants`,{
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/contestants`,{
         headers:{
                   'Content-Type': 'application/json',
                   'Authorization': `Bearer ${apiToken}`
                 }
       });
-      
+
       setContestants(response.data);
     } catch (error) {
       console.error('Error fetching contestants:', error);
@@ -39,9 +39,14 @@ export default function Home() {
     }
   };
 
-  const handleNext = () => {
-    if (votingStatus) {
+
+  const handleNext = async() => {
+    let statuscheck = await votingStatuscheck();
+    if (statuscheck) {
       setCurrentStep(isRegistration ? 'register' : 'vote');
+    }else{
+      alert("Voting lines are close Now.");
+      setCurrentStep('preloader');
     }
   };
 
@@ -49,7 +54,7 @@ export default function Home() {
     getContestant();
   }, []);
 
-  useEffect(() => {
+  const votingStatuscheck=async()=>{
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/votingstatus`,{
       headers:{
                 'Content-Type': 'application/json',
@@ -59,20 +64,34 @@ export default function Home() {
       .then(response => {
         let datax = response?.data?.[0] ?? null;
         if (datax) {
-          setVotingStatus(datax.status);
+          if(datax.status){
           if (datax.status && Cookies.get('alreadyvoted')) {
             setAlreadyVoted(true);
             setCurrentStep('votingsuccess');
           } else {
-            setCurrentStep(votingStatus ? 'vote' : 'preloader');
+            setCurrentStep(datax.status ? 'vote' : 'preloader');
           }
-        } else {
+          setVotingStatus(datax.status);
+          return datax.status;
+        }else {
           Cookies.remove('alreadyvoted');
           setCurrentStep('preloader');
+          return false;
         }
+        } 
       })
       .catch(error => console.error('Error fetching voting status:', error));
-  }, []);
+
+  }
+
+ useEffect(()  =>{
+votingStatuscheck();
+if(alreadyVoted){
+
+  setCurrentStep('votingsuccess');
+}
+
+  },[alreadyVoted]);
 
   return (
     <>

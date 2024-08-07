@@ -14,6 +14,7 @@ const VotingSuccess=()=>{
               <img src="/ggt_preloder_img.svg" alt="Logo" />
                   <h2 className="text-green-400 text-center font-bold text-[1.2rem]">Congratulations! You have successfully submitted your vote!</h2>
               </div> 
+              {/* gliter part */}
               </div>
               </>
          )

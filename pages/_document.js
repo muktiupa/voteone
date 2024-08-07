@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
-        <div className="max-w-[600px] mx-auto">
+        <div style={{width: "600px"}} className=" flex justify-evenly  mx-auto">
           <Main />
         </div>
         <NextScript />

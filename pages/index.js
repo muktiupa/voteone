@@ -102,9 +102,10 @@ if(alreadyVoted){
   },[alreadyVoted]);
 
   return (
+    <div className='max-w-[400px]'>
     <div className=" relative max-h-[100vh] h-[98vh] w-full">
-      {currentStep === "preloader" ? <Header /> : <NeoHeader/>}
-      <div className="flex flex-col items-center justify-center bg-gray-100 h-[60vh] max-w-[600px]">
+      {currentStep === "preloader" || currentStep === "votingsuccess" ? <Header /> : <NeoHeader/>}
+      <div className="flex flex-col items-center justify-center bg-gray-100 h-[60vh]">
         <div className="w-full h-full max-w-sm bg-white">
           <div className="flex flex-1 items-center justify-center">
             {currentStep === 'preloader' && <Preloader votingStatus={votingStatus} goNext={handleNext} />}
@@ -123,6 +124,7 @@ if(alreadyVoted){
         </div>
       </div>
       <Footer />
+    </div>
     </div>
   );
 }

@@ -90,16 +90,18 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
         GAIL’s Got Talent 2024
       </h2>
       {currentContestant &&
-        <div className="flex flex-row items-center justify-evenly w-full">
-          <Avatar className="w-20 h-20 mb-2 border border-gray-300 rounded-[50%]">
+        <div className="flex flex-row items-center justify-center  w-full">
+          <div className='w-30% flex justify-center pt-4'>
+          <Avatar className="w-20 h-20 mb-2 border border-gray-300 rounded-[50%]  ">
           <img src="/avatar.png" alt="avater" className="w-[300px] overflow-hidden" />
             {/* {currentContestant?.image && <AvatarImage src={currentContestant?.image } alt={currentContestant.name} />} */}
             {/* <AvatarFallback className="p-1">{currentContestant?.name ?? ''}</AvatarFallback> */}
           </Avatar>
-          <div className="text-lg font-semibold">
+          </div>
+          <div className="text-lg p-5  font-semibold w-[70%]">
             <div>{currentContestant.name}</div>
             <div className='text-sm text-gray-300'>{currentContestant?.artForm ?? ''}</div>
-            </div>
+          </div>
         </div>
       }
       <div className="mt-1 text-center">

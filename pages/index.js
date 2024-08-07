@@ -102,11 +102,11 @@ if(alreadyVoted){
   },[alreadyVoted]);
 
   return (
-    <div className="border border-gray-300 rounded-md p-2">
+    <div className=" relative max-h-[100vh] h-[98vh] w-full">
       {currentStep === "preloader" ? <Header /> : <NeoHeader/>}
-      <div className="flex flex-col items-center justify-center bg-gray-100 min-h-full">
-        <div className="w-full h-[80vh] max-w-sm bg-white">
-          <div className="p-2 mt-1 bg-white h-full">
+      <div className="flex flex-col items-center justify-center bg-gray-100 h-[60vh] max-w-[600px]">
+        <div className="w-full h-full max-w-sm bg-white">
+          <div className="flex flex-1 items-center justify-center">
             {currentStep === 'preloader' && <Preloader votingStatus={votingStatus} goNext={handleNext} />}
             {currentStep === 'register' && <Register goBack={handleBack} apiToken={apiToken} />}
             {currentStep === 'vote' && (

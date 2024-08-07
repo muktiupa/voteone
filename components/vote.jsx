@@ -3,6 +3,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+// import defaultAvatar from '../public/avatar.png'
 
 const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken }) => {
   const [currentContestantIndex, setCurrentContestantIndex] = useState(0);
@@ -75,15 +76,16 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
 
   return (
     <>
-    <div className='w-[95%] shadow-md bg-white'>
+    <div style={{background: "rgb(255 255 255)"}} className='voting--  absolute top-[20%] left-[auto]  z-50 w-[95%] p-6  shadow-md border-2 rounded-[33px]  mukti--'>
       <h2 className="text-gray-800 text-center font-bold text-[1.5rem] mb-3">
         GAIL’s Got Talent 2024
       </h2>
       {currentContestant &&
         <div className="flex flex-row items-center justify-evenly w-full">
-          <Avatar className="w-20 h-20 mb-2 border border-gray-300 rounded-full p-2">
-            {currentContestant?.image && <AvatarImage src={currentContestant?.image} alt={currentContestant.name} />}
-            <AvatarFallback className="p-1">{currentContestant?.name ?? ''}</AvatarFallback>
+          <Avatar className="w-20 h-20 mb-2 border border-gray-300 rounded-[50%]">
+          <img src="/avatar.png" alt="avater" className="w-[300px] overflow-hidden" />
+            {/* {currentContestant?.image && <AvatarImage src={currentContestant?.image } alt={currentContestant.name} />} */}
+            {/* <AvatarFallback className="p-1">{currentContestant?.name ?? ''}</AvatarFallback> */}
           </Avatar>
           <div className="text-lg font-semibold">
             <div>{currentContestant.name}</div>

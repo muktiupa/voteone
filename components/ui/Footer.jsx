@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <div className="flex mt-2 flex-col items-center justify-between bg-white text-[8px] absolute bottom-0">
+    <div className="flex mt-2 flex-col items-center justify-between bg-white text-[8px] absolute bottom-0 w-full">
       <Image
         src="/techindialogo.png"
         alt="Logo"

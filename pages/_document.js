@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
-        <div style={{width: "600px"}} className=" flex justify-evenly  mx-auto">
+        <div style={{height:"100vh"}} className=" flex justify-evenly  mx-auto">
           <Main />
         </div>
         <NextScript />

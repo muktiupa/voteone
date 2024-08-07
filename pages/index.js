@@ -103,7 +103,7 @@ if(alreadyVoted){
 
   return (
     <div className='max-w-[450px]'>
-    <div className=" relative max-h-[100vh] h-[98vh] w-full">
+    <div className=" relative max-h-[100vh] h-[90vh] w-full">
       {currentStep === "preloader" || currentStep === "votingsuccess" ? <Header /> : <NeoHeader/>}
       <div className="flex flex-col items-center justify-center bg-gray-100 h-[60vh]">
         <div className="w-full h-full max-w-sm bg-white">

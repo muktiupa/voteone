@@ -85,7 +85,7 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
 
   return (
     <>
-    <div style={{background: "rgb(255 255 255)"}} className='voting--  absolute top-[20%] left-[auto]  z-50 w-[95%] p-6  shadow-md border-2 rounded-[33px]  mukti--'>
+    <div style={{background: "rgb(255 255 255)"}} className='voting--  absolute top-[20%] left-[auto]  z-50 w-[90%] p-6  shadow-md border-2 rounded-[33px]  mukti--'>
       <h2 className="text-gray-800 text-center font-bold text-[1.5rem] mb-3">
         GAIL’s Got Talent 2024
       </h2>

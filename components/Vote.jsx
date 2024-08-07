@@ -45,8 +45,17 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
       alert('You have already cast your vote.');
       return;
     }
+    if(!selectedRating){
+      alert('Select a rating before submit.');
+      return;
+    }
+    const currentContestant = contestants[currentContestantIndex];
 
-    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/castvote`, votingData, {
+    let finalvotingdata = [...votingData,{ contestantId: currentContestant._id, rating: selectedRating }];
+    
+
+   
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/castvote`, finalvotingdata, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.NEXT_PUBLIC_APITOKEN}`

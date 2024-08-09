@@ -45,11 +45,13 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
       alert('You have already cast your vote.');
       return;
     }
-    if(!selectedRating){
+ 
+    const currentContestant = contestants?.[currentContestantIndex] ?? null;
+
+    if(!selectedRating && !currentContestant){
       alert('Select a rating before submit.');
       return;
     }
-    const currentContestant = contestants[currentContestantIndex];
 
     let finalvotingdata = [...votingData,{ contestantId: currentContestant._id, rating: selectedRating }];
     

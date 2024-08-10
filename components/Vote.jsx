@@ -95,9 +95,8 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
         <div className="flex flex-row items-center justify-center  w-full">
           <div className='w-30% flex justify-center pt-4'>
           <Avatar className="w-20 h-20 mb-2 border border-gray-300 rounded-[50%]  ">
-          <img src="/avatar.png" alt="avater" className="w-[300px] overflow-hidden" />
-            {/* {currentContestant?.image && <AvatarImage src={currentContestant?.image } alt={currentContestant.name} />} */}
-            {/* <AvatarFallback className="p-1">{currentContestant?.name ?? ''}</AvatarFallback> */}
+          <img src={`/contestants/${currentContestant._id}.png`} alt="avater" className="w-[300px] overflow-hidden" />
+          
           </Avatar>
           </div>
           <div className="text-lg p-5  font-semibold w-[70%]">

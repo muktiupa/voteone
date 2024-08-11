@@ -18,17 +18,35 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
   };
 
   const handleNext = () => {
-    if (selectedRating === null) return;
-    if (!contestants) return;
+    if (selectedRating === null || !contestants) return;
+  
     const currentContestant = contestants[currentContestantIndex];
-    setVotingData(prevData => [
-      ...prevData,
-      { contestantId: currentContestant._id, rating: selectedRating }
-    ]);
+  
+    setVotingData(prevData => {
+      const existingEntryIndex = prevData.findIndex(
+        entry => entry.contestantId === currentContestant._id
+      );
+  
+      if (existingEntryIndex !== -1) {
+        // Update existing entry
+        const updatedData = [...prevData];
+        updatedData[existingEntryIndex].rating = selectedRating;
+        return updatedData;
+      } else {
+        // Add new entry
+        return [
+          ...prevData,
+          { contestantId: currentContestant._id, rating: selectedRating }
+        ];
+      }
+    });
     setSelectedRating(null);
     setCurrentContestantIndex(currentContestantIndex + 1);
     setCurrentContestant(contestants[currentContestantIndex + 1]);
+  
   };
+
+
 
   const handleBackClick = () => {
     if (currentContestantIndex > 0) {

@@ -124,7 +124,7 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
         </div>
       }
       <div className="mt-1 text-center">
-        <p className='text-sm'>Please cast your vote on a scale of 1 to 10, with 1 being the worst and 10 being the best.</p>
+        <p className='text-sm'>Please cast your vote on a scale of 0 to 10, with 0 being the worst and 10 being the best.</p>
         <div className="grid grid-cols-3 gap-2 mt-2">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
             <Button

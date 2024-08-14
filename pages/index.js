@@ -49,7 +49,7 @@ export default function Home() {
       setCurrentStep(isRegistration ? 'register' : 'vote');
      
     }else{
-      alert("Voting lines are close Now.");
+      alert("GAIL Got Talent 2024 voting will begin shortly.");
       setCurrentStep('preloader');
     }
   };

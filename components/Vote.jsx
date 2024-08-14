@@ -85,7 +85,7 @@ const Vote = ({ contestants, alreadyVoted, setAlreadyVoted, goBack , apiToken })
         if (response.status === 201) {
           Cookies.set('alreadyvoted', 'true');
           setAlreadyVoted(true);
-          alert('Your vote has been successfully submitted.');
+          alert('Congratulations! Your vote has been submitted successfully. Thanks for your contribution.');
         }
       })
       .catch(error => {
